@@ -33,8 +33,9 @@ const EmployerForm = ({ Employer }: { Employer: Employer }) => {
   const form = useForm<z.infer<typeof validateEmployer>>({
     resolver: zodResolver(validateEmployer),
     defaultValues: {
-      companyName: Employer?.companyName,
-      address: Employer?.address,
+      fundName: Employer?.companyName || '',
+      location: Employer?.address || '',
+      investmentFocus: [],
     },
   });
 
@@ -72,16 +73,16 @@ const EmployerForm = ({ Employer }: { Employer: Employer }) => {
             >
               <FormField
                 control={form.control}
-                name="companyName"
+                name="fundName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="dark:text-gray-200">
-                      Company Name
+                      Fund Name
                     </FormLabel>
                     <FormControl>
                       <Input
                         className="dark:text-gray-200"
-                        placeholder="Company Name"
+                        placeholder="Fund Name"
                         {...field}
                       />
                     </FormControl>
@@ -92,18 +93,40 @@ const EmployerForm = ({ Employer }: { Employer: Employer }) => {
               />
               <FormField
                 control={form.control}
-                name="address"
+                name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="dark:text-gray-200">addres</FormLabel>
+                    <FormLabel className="dark:text-gray-200">Headquarters Location</FormLabel>
                     <FormControl>
                       <Input
                         className="dark:text-gray-200"
-                        placeholder="address"
+                        placeholder="Location"
                         {...field}
                       />
                     </FormControl>
 
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="investmentFocus"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="dark:text-gray-200">Investment Focus Areas</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="dark:text-gray-200"
+                        placeholder="Enter focus areas separated by commas"
+                        value={field.value?.join(', ') || ''}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          field.onChange(value ? value.split(',').map(item => item.trim()) : []);
+                        }}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

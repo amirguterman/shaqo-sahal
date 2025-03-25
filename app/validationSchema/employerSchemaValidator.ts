@@ -1,8 +1,11 @@
 import z from "zod";
 
-const validateEmployer = z.object({
-  companyName: z.string().min(4, "atleast four characters"),
-  address: z.string().min(4, "atleast four characters"),
+const validateInvestor = z.object({
+  fundName: z.string().min(4, "Fund name must be at least 4 characters"),
+  location: z.string().min(4, "Headquarters location required"),
   logo: z.string().optional(),
+  investmentFocus: z.array(z.string()).min(1, "Select at least one focus area"),
+  website: z.string().url().optional(),
 });
-export default validateEmployer;
+
+export default validateInvestor;

@@ -21,7 +21,7 @@ const Hero = () => {
             Got Skill ? <br /> Meet Opportunity
           </h1>
           <h1 className="text-xs md:text-2xl md:text-left text-center">
-            Company reviews. Salaries. Interviews. Jobs.
+            Startups. Investors. Funding. Opportunities.
           </h1>
           {/* search card  */}
           <div className="rounded-2xl md:rounded-lg py-3 px-5 flex items-center justify-center bg-white dark:bg-gray-900 flex-col md:flex-row w-full">
@@ -33,7 +33,7 @@ const Hero = () => {
                   }}
                   value={homeSearch.title}
                   className="text-xl h-full outline-none w-full bg-transparent"
-                  placeholder="Job title or keyword"
+                  placeholder="Opportunity title or keyword"
                 />
               </div>
               <div className="md:border-r-2 md:border-b-0 border-b-2 w-full pb-3 md:pb-0 md:pl-1">
@@ -50,7 +50,7 @@ const Hero = () => {
 
             <Button
               onClick={() => {
-                router.push(`/jobs?value=${homeSearch}`);
+                router.push(`/opportunities?value=${homeSearch}`);
               }}
               className="rounded-lg p-5 ml-2 bg-main-400 text-white w-full md:w-[10rem] mt-3 md:mt-0"
             >

@@ -1,21 +1,19 @@
 "use client";
 import { Button } from "@/components/ui/button";
-
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-
 import { ModeToggle } from "./ThemeMode";
+
 const Nav = () => {
   const { data: session }: any = useSession();
-
   const router = useRouter();
 
   return (
-    <div className="z-50 w-full max-w-7xl mx-auto flex justify-between items-center  p-3 shadow-lg ">
-      {/* logo  */}
+    <div className="z-50 w-full max-w-7xl mx-auto flex justify-between items-center p-3 shadow-lg">
+      {/* logo */}
       <div>
         <Link href="/">
           <Image src="/dark_logo.svg" width={33} height={33} alt="logo" />
@@ -23,13 +21,13 @@ const Nav = () => {
       </div>
 
       <div className="flex items-center gap-x-2">
-        <Link href="/jobs" className="transition-all duration-300 mr-10">
+        <Link href="/opportunities" className="transition-all duration-300 mr-10">
           Opportunities
         </Link>
         <ModeToggle />
 
         {session ? (
-          session?.user?.type === "employer" ? (
+          session?.user?.type === "investor" ? (
             <Button
               size={"sm"}
               onClick={() => {
@@ -39,7 +37,7 @@ const Nav = () => {
             >
               Dashboard
             </Button>
-          ) : session?.user?.type === "jobSeeker" ? (
+          ) : session?.user?.type === "startup" ? (
             <Button
               size={"sm"}
               onClick={() => {

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import JobCard from "./JobCard";
+import OpportunityCard from "./OpportunityCard";
 
 import {
   Carousel,
@@ -13,12 +13,12 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { API } from "@/lib/config";
-import Loading from "../(pages)/jobSeeker/loading";
-export const LatestJobs = () => {
+import Loading from "./Loading";
+export default function InvestmentOpportunities() {
   const { data, isLoading } = useQuery({
-    queryKey: ["latestJobs"],
+    queryKey: ["investmentOpportunities"],
     queryFn: () =>
-      axios.get(`${API}/api/employer/job/all`).then((res) => res.data),
+      axios.get(`${API}/api/investor/opportunities/all`).then((res) => res.data),
     staleTime: 0,
     gcTime: 0,
     retry: 3,
@@ -29,27 +29,27 @@ export const LatestJobs = () => {
   return (
     <div className="px-10 py-16">
       <h1 className="md:text-3xl font-medium text-gray-800 font-sans dark:text-gray-100">
-        Latest Jobs
+        Investment Opportunities
       </h1>
       <div className="flex items-center justify-between text-gray-600  py-3 md:text-xl">
         <div className="flex space-x-3">
-          <p>{data.length} jobs live &</p>
+          <p>{data?.length ?? 0} opportunities available</p>
           <p>
             {
-              data.filter(
+              data?.filter(
                 (d: any) =>
                   new Date(d.created).toDateString() ==
                   new Date().toDateString()
-              ).length
+              )?.length ?? 0
             }{" "}
             added today .
           </p>
         </div>
         <Link
           className="text-lg font-sans hover:border-b-2 border-main-400 duration-300"
-          href={"/jobs"}
+          href={"/opportunities"}
         >
-          View All jobs
+          View All Opportunities
         </Link>
       </div>
       <div className="px-3">
@@ -60,13 +60,13 @@ export const LatestJobs = () => {
           className="w-full"
         >
           <CarouselContent>
-            {data.map((job: any, index: number) => (
+            {data?.map((job: any, index: number) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1">
-                  <JobCard key={job.id} {...job} />
+                  <OpportunityCard key={job.id} {...job} />
                 </div>
               </CarouselItem>
-            ))}
+            )) || []}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />

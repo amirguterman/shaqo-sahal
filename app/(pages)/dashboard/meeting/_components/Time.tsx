@@ -31,7 +31,7 @@ const Time = ({ control, setValue }: TimeControl) => {
   return (
     <Controller
       control={control}
-      name="time"
+      name="startTime"
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <FormLabel>Time</FormLabel>
@@ -63,7 +63,7 @@ const Time = ({ control, setValue }: TimeControl) => {
                       value={time.name}
                       key={time.name}
                       onSelect={() => {
-                        setValue("time", time.name);
+                        setValue("startTime", time.name);
                       }}
                     >
                       <Check

@@ -6,36 +6,36 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { API } from "@/lib/config";
 import Link from "next/link";
-interface JobCard {
+interface OpportunityCard {
   title: string;
-  Employer: any;
-  workType: string;
+  Investor: any;
+  investmentStage: string;
   location: string;
-  salaryType: string;
-  salary: number;
-  jobCategory: string;
+  fundingType: string;
+  fundingAmount: number;
+  industrySector: string;
   deadline: any;
   id: string;
 }
-const JobCard = ({
+const OpportunityCard = ({
   id,
   title,
-  Employer,
-  workType,
+  Investor,
+  investmentStage,
   location,
-  salary,
-  jobCategory,
-  salaryType,
+  fundingAmount,
+  industrySector,
+  fundingType,
   deadline,
-}: JobCard) => {
+}: OpportunityCard) => {
   const { data: session }: any = useSession();
 
   const router = useRouter();
 
   return (
     <div
-      onClick={() => router.push(API + "/jobSeeker/applicant/" + id)}
-      // href={`${API}/jobSeeker/applicant/${id}`}
+      onClick={() => router.push(API + "/startup/proposal/" + id)}
+      // href={`${API}/startup/proposal/${id}`}
       className={`p-4 rounded-md cursor-pointer shadow 
         dark:shadow-gray-700
       `}
@@ -44,21 +44,21 @@ const JobCard = ({
         <h2 className="text-xl font-bold">{title}</h2>
       </div>
       <p className="text-gray-700">
-        by <span className="font-bold">{Employer?.companyName}</span> in{" "}
-        <span className="text-green-500">{jobCategory}</span>
+        by <span className="font-bold">{Investor?.fundName}</span> in{" "}
+        <span className="text-green-500">{industrySector}</span>
       </p>
       <div className="flex items-center justify-start space-x-2 py-4">
         <span
           className={`px-2 py-1 rounded-lg text-purple-500 bg-purple-200
           `}
         >
-          {workType}
+          {investmentStage}
         </span>
         <span className="text-green-500 px-2 py-1 rounded-lg bg-green-100">
           {location}
         </span>
         <p className="text-green-500 px-2 py-1 rounded-lg bg-green-100">
-          ${salary}/{salaryType}
+          ${fundingAmount?.toLocaleString() || 0}/{fundingType || 'one-time'}
         </p>
       </div>
       <div className="flex items-center justify-between mt-2">
@@ -70,4 +70,4 @@ const JobCard = ({
   );
 };
 
-export default JobCard;
+export default OpportunityCard;

@@ -78,11 +78,11 @@ const MeetingModal = ({ meeting, id, isExpired }: Data) => {
   const form = useForm<z.infer<typeof meetingValidator>>({
     resolver: zodResolver(meetingValidator),
     defaultValues: {
-      type: meeting?.type,
-      date: meeting?.Date,
-      time: meeting?.time,
-      timeDuration: meeting?.timeDuration,
-      note: meeting?.note,
+      meetingType: meeting?.type,
+      meetingDate: meeting?.Date,
+      startTime: meeting?.time,
+      duration: meeting?.timeDuration,
+      agenda: meeting?.note,
     },
   });
   async function onSubmit(values: z.infer<typeof meetingValidator>) {
@@ -134,7 +134,7 @@ const MeetingModal = ({ meeting, id, isExpired }: Data) => {
                     {" "}
                     <FormField
                       control={form.control}
-                      name="type"
+                      name="meetingType"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="dark:text-gray-200">
@@ -165,7 +165,7 @@ const MeetingModal = ({ meeting, id, isExpired }: Data) => {
                     {/* date  */}
                     <FormField
                       control={form.control}
-                      name="date"
+                      name="meetingDate"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
                           <FormLabel>Date</FormLabel>
@@ -219,7 +219,7 @@ const MeetingModal = ({ meeting, id, isExpired }: Data) => {
                     {/* duration time  */}
                     <FormField
                       control={form.control}
-                      name="timeDuration"
+                      name="duration"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="dark:text-gray-200">
@@ -245,7 +245,7 @@ const MeetingModal = ({ meeting, id, isExpired }: Data) => {
                   {/* note  */}
                   <FormField
                     control={form.control}
-                    name="note"
+                    name="agenda"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="dark:text-gray-200">

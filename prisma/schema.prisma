@@ -58,87 +58,88 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model JobSeeker {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  email        String        @unique
-  name         String
-  role         String
-  jobCategory  String[]
-  applications Application[]
-  created      DateTime      @default(now())
-  updated      DateTime      @updatedAt
+model Startup {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  email          String           @unique
+  name           String
+  industry       String
+  industrySector String[]
+  proposals      FundingProposal[]
+  created        DateTime         @default(now())
+  updated        DateTime         @updatedAt
 }
 
-model Employer {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  companyName String
-  address     String
-  logo        Json
-  email       String       @unique
-  jobListings JobListing[]
-  created     DateTime     @default(now())
-  updated     DateTime     @updatedAt
+model Investor {
+  id                    String                 @id @default(auto()) @map("_id") @db.ObjectId
+  email                 String                 @unique
+  fundName              String
+  location              String
+  logo                  Json?
+  website               String?
+  investmentFocus       String[]
+  investmentOpportunities InvestmentOpportunity[]
+  created               DateTime               @default(now())
+  updated               DateTime               @updatedAt
 }
 
-model JobListing {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
-  description  String
-  salary       Float
-  status       String        @default("pending")
-  deadline     DateTime?
-  salaryType   String        @default("")
-  requirements String        @default("")
-  jobCategory  String        @default("")
-  location     String        @default("")
-  workType     String        @default("")
-  applications Application[]
-  Employer     Employer?     @relation(fields: [employerId], references: [id], onDelete: Cascade)
-  employerId   String?       @db.ObjectId
-  created      DateTime      @default(now())
-  updated      DateTime      @updatedAt
+model InvestmentOpportunity {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String
+  fundingAmount   Float
+  status          String           @default("seekingFunding")
+  deadline        DateTime?
+  fundingType     String           @default("")
+  requirements    String           @default("")
+  industrySector  String           @default("")
+  location        String           @default("")
+  investmentStage String           @default("")
+  proposals       FundingProposal[]
+  Investor        Investor?        @relation(fields: [investorId], references: [id], onDelete: Cascade)
+  investorId      String?          @db.ObjectId
+  created         DateTime         @default(now())
+  updated         DateTime         @updatedAt
 }
 
-model Application {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  coverLetter  String?
-
-  admited       String?      @default("request")
-  JobSeeker    JobSeeker?  @relation(fields: [jobSeekerId], references: [id], onDelete: Cascade)
-  jobSeekerId  String?     @db.ObjectId
-  JobListing   JobListing? @relation(fields: [jobListingId], references: [id], onDelete: Cascade)
-  jobListingId String?     @db.ObjectId
-  resume       String      @default("")
-  linkedIn     String      @default("")
-  portfolio    String      @default("")
-  Meetings     Meeting[]
-  created      DateTime    @default(now())
-  updated      DateTime    @updatedAt
+model FundingProposal {
+  id                   String               @id @default(auto()) @map("_id") @db.ObjectId
+  pitchDeck            String?
+  fundingStatus        String?              @default("underReview")
+  Startup              Startup?             @relation(fields: [startupId], references: [id], onDelete: Cascade)
+  startupId            String?              @db.ObjectId
+  InvestmentOpportunity InvestmentOpportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId        String?              @db.ObjectId
+  businessPlan         String               @default("")
+  financials           String               @default("")
+  teamInfo             String               @default("")
+  Meetings             Meeting[]
+  created              DateTime             @default(now())
+  updated              DateTime             @updatedAt
 }
 
 model Meeting {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  type          String
-  Date          DateTime
-  time          String
-  timeDuration  Int
-  note          String
-  status        String       @default("")
-  Application   Application? @relation(fields: [applicationId], references: [id],onDelete: Cascade)
-  applicationId String?      @db.ObjectId
-   created      DateTime    @default(now())
-  updated      DateTime    @updatedAt
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  type              String
+  Date              DateTime
+  time              String
+  timeDuration      Int
+  note              String
+  status            String          @default("")
+  FundingProposal   FundingProposal? @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  proposalId        String?         @db.ObjectId
+  created           DateTime        @default(now())
+  updated           DateTime        @updatedAt
 }
 
-model JobRoles {
-  id           String           @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  roleCategory RoleCategories[]
+model IndustrySectors {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  SubSector SubSector[]
 }
 
-model RoleCategories {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  JobRoles   JobRoles? @relation(fields: [jobRolesId], references: [id], onDelete: Cascade)
-  jobRolesId String?   @db.ObjectId
+model SubSector {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  IndustrySectors IndustrySectors? @relation(fields: [sectorId], references: [id], onDelete: Cascade)
+  sectorId        String?          @db.ObjectId
 }

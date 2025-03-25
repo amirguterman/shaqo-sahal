@@ -1,7 +1,7 @@
-import Nav from "./(pages)/jobs/_components/Nav";
+import Nav from "./components/Nav";
 import Hero from "./components/Hero";
-import Suggest from "./components/Suggest";
-import { LatestJobs } from "./components/LatestJobs";
+import IndustryFocus from "./components/IndustryFocus";
+import InvestmentOpportunities from "./components/InvestmentOpportunities";
 import HowItworks from "./components/HowItworks";
 
 export const dynamic = "force-dynamic";
@@ -14,8 +14,8 @@ export default function Home() {
       </div>
       <Hero />
       <main className="max-w-7xl mx-auto">
-        <Suggest />
-        <LatestJobs />
+        <IndustryFocus />
+        <InvestmentOpportunities />
       </main>
 
       <HowItworks />

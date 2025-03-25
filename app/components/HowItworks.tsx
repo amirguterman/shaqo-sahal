@@ -31,7 +31,7 @@ const HowItWorks = () => {
             <HowItWorksStep
               icon={<FaBriefcase size={48} className="text-yellow-600" />}
               title="Post/Apply"
-              description="Post a job or apply for one."
+              description="Post an opportunity or submit a proposal."
             />
           </div>
         </div>
